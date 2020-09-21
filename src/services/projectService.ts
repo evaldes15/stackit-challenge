@@ -18,12 +18,7 @@ export const getProjectInformation = (projectId:string) => new Promise((resolve,
         let issues = res;
         togglService.getTimeEntries(projectId)
         .then((res:any) => {
-            //console.log(constants.TAG_CATEGORIES_DICTIONARY.has('refactoring'))
-            //mergeIssuesWithEntries(projectId,issues,res.entries)
-            //resolve({issue: issues, timeEntries: res});
-
             resolve(mergeIssuesWithEntries(projectId,issues,res))
-            //resolve(res)
         })
         .catch((err:any) => {
             reject(err);
@@ -45,7 +40,7 @@ function mergeIssuesWithEntries(projectId:string,jiraIssues:any[],timeEntries:an
             id: jiraIssue.key,
             statusCategory:jiraIssue.fields.status.statusCategory.name,
             summary:jiraIssue.fields.issuetype.description,
-            assignee:jiraIssue.fields.assignee,
+            assignee:(jiraIssue.fields.assignee == null) ? "" : jiraIssue.fields.assignee.displayName,
             totalDuration: secondsToTimeFormat(togglEntriesData.totalDuration / 1000),
             totalDurationMillSeconds: togglEntriesData.totalDuration,
             aggregatedTags: Array.from(tags),

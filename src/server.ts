@@ -3,7 +3,14 @@ const app: express.Application = express();
 const projectService = require('./services/projectService')
 
 app.get('/', function (req:any, response:any) {
-    projectService.getProjectInformation(req.query.projectId)
+    if(req.query.projectId == undefined && req.query.projectKey == undefined){
+        return response.status(400).send({
+            status: 400,
+            result: "Missing required parameter: projectId or projectKey"
+        });
+    }
+    let projectId:string = (req.query.projectId == undefined) ? req.query.projectKey : req.query.projectId ;
+    projectService.getProjectInformation(projectId)
     .then((res:any) => {
         response.send(res);
     })
