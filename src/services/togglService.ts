@@ -1,5 +1,6 @@
 const axios = require('axios').default;
 const constants = require('../config/constants');
+const storageService = require('./storageService')
 
 const httpReq = axios.create({
     baseURL: constants.TOGGL_DOMAIN + constants.TOGGL_TIME_ENTRIES,
@@ -23,8 +24,15 @@ export const getTimeEntries = (projectId:string,pageIndex:number = 1,entriesCoun
         if(entries < response.data.total_count)
           return resolve(getTimeEntries(projectId,++pageIndex,entries,data))
         else{
-          return resolve(data)
-      }   
+          storageService.saveEntries(data)
+            .then((res:any) => {
+              console.log(res);
+            })
+            .catch((err:any) => {
+              console.log(err);
+            });
+            return resolve(data)
+        }   
       })
       .catch(function (error:any) {
         let errorMsg:string = 'Problems from getting information from Toggl, please retry later';

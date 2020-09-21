@@ -9,7 +9,7 @@ import { TimeEntry } from '../models/timeEntry';
 
 const httpReq = axios.create({
     baseURL: constants.JIRA_DOMAIN + constants.JIRA_PROJECT_ISSUES,
-    timeout: 1000,
+    timeout: 5000,
     headers: {'Authorization': constants.AUTHORIZATION_TYPE + " " + constants.JIRA_API_TOKEN}
 });
 
