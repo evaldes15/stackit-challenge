@@ -2,7 +2,7 @@ import express = require('express');
 const app: express.Application = express();
 const projectService = require('./services/projectService')
 
-app.get('/', function (req, response) {
+app.get('/', function (req:any, response:any) {
     projectService.getProjectInformation(req.query.projectId)
     .then((res:any) => {
         response.send(res);
