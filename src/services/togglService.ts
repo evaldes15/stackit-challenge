@@ -29,8 +29,6 @@ export const getTimeEntries = (projectId:string,pageIndex:number = 1,entriesCoun
       .catch(function (error:any) {
         let errorMsg:string = 'Problems from getting information from Toggl, please retry later';
         let errorCode:number = 500;
-        console.log(error.response)
-        console.log(error.response.status)
         if (error.response && error.response.status == 400) {
           errorMsg = `Invalid parameters please verify`
           errorCode = 400

@@ -6,6 +6,7 @@ import { Project } from '../models/project';
 import { Issue } from '../models/issue';
 import { TimeEntry } from '../models/timeEntry';
 
+
 const httpReq = axios.create({
     baseURL: constants.JIRA_DOMAIN + constants.JIRA_PROJECT_ISSUES,
     timeout: 1000,
@@ -66,8 +67,8 @@ function getTimeEntriesByIssue(jiraIssue: string,togglTimeEntries:any[],categori
                     desc:togglTimeEntry.description,
                     start:timestampToTimeFormat(togglTimeEntry.start),
                     stop:timestampToTimeFormat(togglTimeEntry.end),
-                    duration:secondsToTimeFormat(togglTimeEntry.dur),
-                    durationMillSeconds:togglTimeEntry.dur*1000,
+                    duration:secondsToTimeFormat(togglTimeEntry.dur/1000),
+                    durationMillSeconds:togglTimeEntry.dur,
                     tags:togglTimeEntry.tags,
                     category: cat
                 });
