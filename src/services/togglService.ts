@@ -24,13 +24,16 @@ export const getTimeEntries = (projectId:string,pageIndex:number = 1,entriesCoun
         if(entries < response.data.total_count)
           return resolve(getTimeEntries(projectId,++pageIndex,entries,data))
         else{
-          storageService.saveEntries(data)
-            .then((res:any) => {
-              console.log(res);
-            })
-            .catch((err:any) => {
-              console.log(err);
-            });
+            let env = process.env["NODE_ENV"];
+            if(env != 'test'){
+              storageService.saveEntries(data)
+                .then((res:any) => {
+                  console.log(res);
+                })
+                .catch((err:any) => {
+                  console.log(err);
+                });
+            }
             return resolve(data)
         }   
       })
